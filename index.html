@@ -1,0 +1,1231 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AgriVision AI | Agricultural Expert System</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800&family=Rajdhani:wght@400;500;600;700&display=swap');
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+:root{
+    --cyan:#00f6ff;
+    --green:#00ff9d;
+    --blue:#168cff;
+    --dark:#020814;
+    --panel:rgba(5,20,35,.72);
+    --line:rgba(0,246,255,.28);
+    --text:#dffcff;
+    --muted:#78a9b5;
+}
+
+body{
+    min-height:100vh;
+    color:var(--text);
+    font-family:'Rajdhani',sans-serif;
+    background:
+        radial-gradient(circle at 50% 20%,rgba(0,246,255,.13),transparent 28%),
+        radial-gradient(circle at 15% 80%,rgba(0,255,157,.08),transparent 25%),
+        #020814;
+    overflow-x:hidden;
+}
+
+/* BACKGROUND GRID */
+
+body::before{
+    content:"";
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    background-image:
+        linear-gradient(rgba(0,246,255,.055) 1px,transparent 1px),
+        linear-gradient(90deg,rgba(0,246,255,.055) 1px,transparent 1px);
+    background-size:45px 45px;
+    transform:perspective(700px) rotateX(60deg) scale(1.8);
+    transform-origin:center bottom;
+    opacity:.4;
+}
+
+/* SCAN LINE */
+
+body::after{
+    content:"";
+    position:fixed;
+    left:0;
+    right:0;
+    height:2px;
+    background:linear-gradient(90deg,transparent,var(--cyan),transparent);
+    box-shadow:0 0 20px var(--cyan);
+    opacity:.18;
+    animation:scan 7s linear infinite;
+    pointer-events:none;
+    z-index:100;
+}
+
+@keyframes scan{
+    from{top:-5px}
+    to{top:100vh}
+}
+
+/* HEADER */
+
+header{
+    height:82px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:0 5%;
+    border-bottom:1px solid var(--line);
+    background:rgba(1,10,20,.72);
+    backdrop-filter:blur(15px);
+    position:relative;
+    z-index:10;
+}
+
+.logo{
+    display:flex;
+    align-items:center;
+    gap:14px;
+}
+
+.logo-icon{
+    width:48px;
+    height:48px;
+    border:1px solid var(--cyan);
+    border-radius:50%;
+    display:grid;
+    place-items:center;
+    font-size:25px;
+    box-shadow:
+        0 0 15px rgba(0,246,255,.4),
+        inset 0 0 18px rgba(0,246,255,.15);
+    animation:pulse 2.5s infinite;
+}
+
+@keyframes pulse{
+    50%{
+        box-shadow:
+        0 0 35px rgba(0,246,255,.65),
+        inset 0 0 25px rgba(0,246,255,.3);
+    }
+}
+
+.logo h1{
+    font-family:'Orbitron',sans-serif;
+    font-size:20px;
+    letter-spacing:2px;
+    color:white;
+}
+
+.logo span{
+    display:block;
+    color:var(--cyan);
+    font-size:11px;
+    letter-spacing:4px;
+    margin-top:3px;
+}
+
+nav{
+    display:flex;
+    gap:25px;
+}
+
+nav a{
+    color:#87aeb8;
+    text-decoration:none;
+    font-size:14px;
+    letter-spacing:1px;
+    transition:.3s;
+}
+
+nav a:hover{
+    color:var(--cyan);
+    text-shadow:0 0 10px var(--cyan);
+}
+
+/* HERO */
+
+.hero{
+    min-height:430px;
+    display:grid;
+    grid-template-columns:1.1fr .9fr;
+    align-items:center;
+    padding:50px 7%;
+    position:relative;
+}
+
+.hero-content{
+    position:relative;
+    z-index:2;
+}
+
+.status{
+    display:inline-flex;
+    align-items:center;
+    gap:9px;
+    padding:7px 13px;
+    border:1px solid rgba(0,255,157,.4);
+    background:rgba(0,255,157,.05);
+    color:var(--green);
+    border-radius:20px;
+    font-size:12px;
+    letter-spacing:2px;
+}
+
+.status-dot{
+    width:7px;
+    height:7px;
+    background:var(--green);
+    border-radius:50%;
+    box-shadow:0 0 12px var(--green);
+}
+
+.hero h2{
+    margin-top:22px;
+    font-family:'Orbitron',sans-serif;
+    font-size:clamp(35px,5vw,65px);
+    line-height:1.05;
+    letter-spacing:2px;
+}
+
+.hero h2 span{
+    color:var(--cyan);
+    text-shadow:
+        0 0 10px var(--cyan),
+        0 0 30px rgba(0,246,255,.5);
+}
+
+.hero p{
+    margin-top:20px;
+    max-width:610px;
+    color:var(--muted);
+    font-size:17px;
+    line-height:1.6;
+}
+
+.hero-buttons{
+    margin-top:28px;
+    display:flex;
+    gap:15px;
+    flex-wrap:wrap;
+}
+
+.btn{
+    padding:13px 24px;
+    border:1px solid var(--cyan);
+    background:rgba(0,246,255,.08);
+    color:var(--cyan);
+    font-family:'Rajdhani';
+    font-weight:bold;
+    letter-spacing:1px;
+    cursor:pointer;
+    transition:.3s;
+}
+
+.btn:hover{
+    background:var(--cyan);
+    color:#001016;
+    box-shadow:0 0 30px rgba(0,246,255,.5);
+}
+
+.btn.green{
+    border-color:var(--green);
+    color:var(--green);
+    background:rgba(0,255,157,.07);
+}
+
+/* HOLOGRAM */
+
+.hologram{
+    height:360px;
+    position:relative;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+.holo-core{
+    width:145px;
+    height:145px;
+    border:1px solid var(--cyan);
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    position:relative;
+    background:radial-gradient(circle,rgba(0,246,255,.18),transparent 65%);
+    box-shadow:
+        0 0 30px rgba(0,246,255,.35),
+        inset 0 0 30px rgba(0,246,255,.2);
+}
+
+.holo-core::before{
+    content:"🌾";
+    font-size:65px;
+    filter:drop-shadow(0 0 15px var(--green));
+}
+
+.ring{
+    position:absolute;
+    border:1px solid var(--cyan);
+    border-radius:50%;
+    box-shadow:0 0 12px rgba(0,246,255,.3);
+}
+
+.r1{
+    width:220px;
+    height:220px;
+    animation:rotate1 8s linear infinite;
+}
+
+.r2{
+    width:290px;
+    height:110px;
+    transform:rotate(25deg);
+    animation:rotate2 7s linear infinite;
+}
+
+.r3{
+    width:310px;
+    height:150px;
+    transform:rotate(-30deg);
+    animation:rotate3 9s linear infinite;
+}
+
+.r4{
+    width:190px;
+    height:190px;
+    border-style:dashed;
+    border-color:var(--green);
+    animation:spin 12s linear infinite reverse;
+}
+
+@keyframes rotate1{
+    to{transform:rotate(360deg)}
+}
+
+@keyframes rotate2{
+    to{transform:rotate(385deg)}
+}
+
+@keyframes rotate3{
+    to{transform:rotate(-390deg)}
+}
+
+@keyframes spin{
+    to{transform:rotate(360deg)}
+}
+
+.holo-label{
+    position:absolute;
+    bottom:8px;
+    padding:7px 16px;
+    border:1px solid var(--cyan);
+    background:rgba(0,246,255,.07);
+    font-family:'Orbitron';
+    font-size:11px;
+    letter-spacing:2px;
+    color:var(--cyan);
+}
+
+/* DASHBOARD */
+
+.dashboard{
+    padding:20px 5% 60px;
+}
+
+.section-title{
+    text-align:center;
+    margin-bottom:25px;
+}
+
+.section-title h3{
+    font-family:'Orbitron';
+    font-size:23px;
+    letter-spacing:2px;
+}
+
+.section-title p{
+    color:var(--muted);
+    margin-top:7px;
+}
+
+.cards{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:16px;
+}
+
+.card{
+    position:relative;
+    padding:22px;
+    min-height:145px;
+    border:1px solid var(--line);
+    background:linear-gradient(
+        145deg,
+        rgba(0,246,255,.08),
+        rgba(2,15,27,.82)
+    );
+    backdrop-filter:blur(10px);
+    overflow:hidden;
+    transition:.35s;
+}
+
+.card::before{
+    content:"";
+    position:absolute;
+    width:100px;
+    height:2px;
+    top:0;
+    left:-110px;
+    background:var(--cyan);
+    box-shadow:0 0 20px var(--cyan);
+    animation:cardscan 4s infinite;
+}
+
+@keyframes cardscan{
+    50%{left:100%}
+}
+
+.card:hover{
+    transform:translateY(-5px);
+    border-color:var(--cyan);
+    box-shadow:0 0 25px rgba(0,246,255,.12);
+}
+
+.card-icon{
+    font-size:28px;
+}
+
+.card h4{
+    margin-top:10px;
+    font-size:15px;
+    letter-spacing:1px;
+}
+
+.value{
+    margin-top:5px;
+    font-family:'Orbitron';
+    font-size:25px;
+    color:var(--cyan);
+}
+
+.good{
+    color:var(--green);
+}
+
+/* MAIN GRID */
+
+.main-grid{
+    margin-top:20px;
+    display:grid;
+    grid-template-columns:1.25fr .75fr;
+    gap:20px;
+}
+
+.panel{
+    border:1px solid var(--line);
+    background:rgba(3,16,28,.75);
+    backdrop-filter:blur(12px);
+    padding:25px;
+    position:relative;
+}
+
+.panel-title{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:20px;
+}
+
+.panel-title h3{
+    font-family:'Orbitron';
+    font-size:16px;
+    letter-spacing:1px;
+}
+
+.live{
+    font-size:11px;
+    color:var(--green);
+}
+
+/* SOIL VISUAL */
+
+.soil-display{
+    display:grid;
+    grid-template-columns:170px 1fr;
+    gap:30px;
+    align-items:center;
+}
+
+.circular{
+    width:155px;
+    height:155px;
+    border-radius:50%;
+    background:
+        conic-gradient(
+            var(--cyan) 0 72%,
+            rgba(255,255,255,.06) 72% 100%
+        );
+    display:grid;
+    place-items:center;
+    box-shadow:0 0 25px rgba(0,246,255,.18);
+    position:relative;
+}
+
+.circular::after{
+    content:"";
+    position:absolute;
+    width:120px;
+    height:120px;
+    border-radius:50%;
+    background:#061522;
+}
+
+.circular span{
+    position:relative;
+    z-index:2;
+    font-family:'Orbitron';
+    font-size:24px;
+    color:var(--cyan);
+}
+
+.metric{
+    margin:14px 0;
+}
+
+.metric-head{
+    display:flex;
+    justify-content:space-between;
+    margin-bottom:5px;
+    font-size:14px;
+}
+
+.bar{
+    height:6px;
+    background:rgba(255,255,255,.07);
+    overflow:hidden;
+}
+
+.bar span{
+    display:block;
+    height:100%;
+    background:linear-gradient(90deg,var(--blue),var(--cyan));
+    box-shadow:0 0 10px var(--cyan);
+}
+
+/* RECOMMENDATION */
+
+.recommendation{
+    margin-top:20px;
+    border:1px solid rgba(0,255,157,.3);
+    padding:18px;
+    background:rgba(0,255,157,.035);
+}
+
+.recommendation h4{
+    color:var(--green);
+    letter-spacing:1px;
+}
+
+.crop{
+    display:flex;
+    align-items:center;
+    gap:15px;
+    margin-top:13px;
+}
+
+.crop-icon{
+    width:50px;
+    height:50px;
+    border:1px solid var(--green);
+    display:grid;
+    place-items:center;
+    font-size:25px;
+}
+
+.crop strong{
+    font-size:20px;
+}
+
+/* FORM */
+
+.form-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:14px;
+}
+
+.field label{
+    display:block;
+    color:#7eaab5;
+    font-size:12px;
+    margin-bottom:6px;
+}
+
+select,
+input{
+    width:100%;
+    padding:11px;
+    color:white;
+    background:#061522;
+    border:1px solid rgba(0,246,255,.25);
+    outline:none;
+    font-family:'Rajdhani';
+}
+
+select:focus,
+input:focus{
+    border-color:var(--cyan);
+    box-shadow:0 0 12px rgba(0,246,255,.15);
+}
+
+.full{
+    grid-column:1/-1;
+}
+
+.analyze{
+    width:100%;
+    margin-top:18px;
+}
+
+/* DISEASE */
+
+.disease{
+    margin-top:20px;
+}
+
+.disease-box{
+    height:145px;
+    border:1px dashed rgba(0,246,255,.35);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    flex-direction:column;
+    gap:8px;
+    color:var(--muted);
+    cursor:pointer;
+}
+
+.disease-box:hover{
+    border-color:var(--cyan);
+    background:rgba(0,246,255,.04);
+}
+
+.disease-box span{
+    font-size:34px;
+}
+
+/* ALERTS */
+
+.alert{
+    padding:13px;
+    border-left:3px solid var(--cyan);
+    background:rgba(0,246,255,.035);
+    margin-bottom:10px;
+    font-size:14px;
+}
+
+.alert.green{
+    border-color:var(--green);
+}
+
+.alert.orange{
+    border-color:#ffbd4a;
+}
+
+/* FOOTER */
+
+footer{
+    border-top:1px solid var(--line);
+    padding:25px 5%;
+    display:flex;
+    justify-content:space-between;
+    color:#557a85;
+    font-size:12px;
+    letter-spacing:1px;
+}
+
+/* RESPONSIVE */
+
+@media(max-width:1000px){
+    .cards{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .main-grid{
+        grid-template-columns:1fr;
+    }
+
+    .hero{
+        grid-template-columns:1fr;
+        text-align:center;
+    }
+
+    .hero p{
+        margin-left:auto;
+        margin-right:auto;
+    }
+
+    .hero-buttons{
+        justify-content:center;
+    }
+}
+
+@media(max-width:650px){
+    nav{
+        display:none;
+    }
+
+    .cards{
+        grid-template-columns:1fr;
+    }
+
+    .form-grid{
+        grid-template-columns:1fr;
+    }
+
+    .soil-display{
+        grid-template-columns:1fr;
+        justify-items:center;
+    }
+
+    footer{
+        flex-direction:column;
+        gap:8px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+
+    <div class="logo">
+        <div class="logo-icon">🌱</div>
+        <div>
+            <h1>AGRIVISION AI</h1>
+            <span>AGRICULTURAL EXPERT SYSTEM</span>
+        </div>
+    </div>
+
+    <nav>
+        <a href="#dashboard">DASHBOARD</a>
+        <a href="#analysis">ANALYSIS</a>
+        <a href="#disease">DISEASE AI</a>
+        <a href="#alerts">ALERTS</a>
+    </nav>
+
+</header>
+
+
+<section class="hero">
+
+    <div class="hero-content">
+
+        <div class="status">
+            <span class="status-dot"></span>
+            AI SYSTEM ONLINE
+        </div>
+
+        <h2>
+            SMART FARMING<br>
+            WITH <span>AI INTELLIGENCE</span>
+        </h2>
+
+        <p>
+            An intelligent agricultural expert system that analyzes
+            soil, climate and crop conditions to provide
+            data-driven farming recommendations.
+        </p>
+
+        <div class="hero-buttons">
+            <button class="btn" onclick="scrollToAnalysis()">
+                ANALYZE FARM →
+            </button>
+
+            <button class="btn green" onclick="showExpert()">
+                ASK AI EXPERT
+            </button>
+        </div>
+
+    </div>
+
+
+    <div class="hologram">
+
+        <div class="ring r1"></div>
+        <div class="ring r2"></div>
+        <div class="ring r3"></div>
+        <div class="ring r4"></div>
+
+        <div class="holo-core"></div>
+
+        <div class="holo-label">
+            HOLOGRAPHIC FARM CORE
+        </div>
+
+    </div>
+
+</section>
+
+
+<section class="dashboard" id="dashboard">
+
+    <div class="section-title">
+        <h3>FARM INTELLIGENCE MONITOR</h3>
+        <p>Real-time agricultural environment simulation</p>
+    </div>
+
+
+    <div class="cards">
+
+        <div class="card">
+            <div class="card-icon">🌡️</div>
+            <h4>TEMPERATURE</h4>
+            <div class="value">28°C</div>
+            <small class="good">Optimal range</small>
+        </div>
+
+        <div class="card">
+            <div class="card-icon">💧</div>
+            <h4>SOIL MOISTURE</h4>
+            <div class="value">72%</div>
+            <small class="good">Healthy</small>
+        </div>
+
+        <div class="card">
+            <div class="card-icon">🌧️</div>
+            <h4>RAINFALL</h4>
+            <div class="value">18mm</div>
+            <small>Next 24 hours</small>
+        </div>
+
+        <div class="card">
+            <div class="card-icon">🌿</div>
+            <h4>CROP HEALTH</h4>
+            <div class="value good">91%</div>
+            <small class="good">Excellent</small>
+        </div>
+
+    </div>
+
+
+    <div class="main-grid">
+
+        <!-- LEFT PANEL -->
+
+        <div class="panel" id="analysis">
+
+            <div class="panel-title">
+                <h3>🧪 SOIL INTELLIGENCE</h3>
+                <span class="live">● LIVE ANALYSIS</span>
+            </div>
+
+
+            <div class="soil-display">
+
+                <div class="circular">
+                    <span>72%</span>
+                </div>
+
+
+                <div>
+
+                    <div class="metric">
+
+                        <div class="metric-head">
+                            <span>Nitrogen</span>
+                            <span>68%</span>
+                        </div>
+
+                        <div class="bar">
+                            <span style="width:68%"></span>
+                        </div>
+
+                    </div>
+
+
+                    <div class="metric">
+
+                        <div class="metric-head">
+                            <span>Phosphorus</span>
+                            <span>74%</span>
+                        </div>
+
+                        <div class="bar">
+                            <span style="width:74%"></span>
+                        </div>
+
+                    </div>
+
+
+                    <div class="metric">
+
+                        <div class="metric-head">
+                            <span>Potassium</span>
+                            <span>61%</span>
+                        </div>
+
+                        <div class="bar">
+                            <span style="width:61%"></span>
+                        </div>
+
+                    </div>
+
+
+                    <div class="metric">
+
+                        <div class="metric-head">
+                            <span>pH Level</span>
+                            <span>6.7</span>
+                        </div>
+
+                        <div class="bar">
+                            <span style="width:67%"></span>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="recommendation">
+
+                <h4>AI CROP RECOMMENDATION</h4>
+
+                <div class="crop">
+
+                    <div class="crop-icon">🌾</div>
+
+                    <div>
+                        <strong>Rice</strong>
+                        <p>High compatibility with current soil conditions</p>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- RIGHT PANEL -->
+
+        <div class="panel">
+
+            <div class="panel-title">
+                <h3>🌱 FARM PARAMETERS</h3>
+                <span class="live">INPUT</span>
+            </div>
+
+
+            <div class="form-grid">
+
+                <div class="field">
+                    <label>SOIL TYPE</label>
+
+                    <select id="soil">
+                        <option>Loamy</option>
+                        <option>Clay</option>
+                        <option>Sandy</option>
+                        <option>Black Soil</option>
+                        <option>Red Soil</option>
+                    </select>
+                </div>
+
+
+                <div class="field">
+                    <label>WATER AVAILABILITY</label>
+
+                    <select id="water">
+                        <option>High</option>
+                        <option>Medium</option>
+                        <option>Low</option>
+                    </select>
+                </div>
+
+
+                <div class="field">
+                    <label>AVERAGE TEMPERATURE</label>
+
+                    <input id="temperature" type="number" value="28">
+                </div>
+
+
+                <div class="field">
+                    <label>RAINFALL (mm)</label>
+
+                    <input id="rainfall" type="number" value="18">
+                </div>
+
+
+                <div class="field full">
+                    <label>REGION</label>
+
+                    <select id="region">
+                        <option>Tropical</option>
+                        <option>Sub-Tropical</option>
+                        <option>Temperate</option>
+                        <option>Arid</option>
+                    </select>
+                </div>
+
+            </div>
+
+
+            <button class="btn analyze" onclick="analyzeFarm()">
+                ⚡ RUN EXPERT ANALYSIS
+            </button>
+
+
+            <div id="analysisResult"
+                 style="margin-top:15px;color:var(--green);font-size:14px;">
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- DISEASE -->
+
+    <div class="panel disease" id="disease">
+
+        <div class="panel-title">
+            <h3>🐛 CROP DISEASE AI</h3>
+            <span class="live">VISION MODULE</span>
+        </div>
+
+        <div class="disease-box" onclick="detectDisease()">
+            <span>📷</span>
+            <strong>SCAN CROP</strong>
+            <small>Click to simulate AI disease detection</small>
+        </div>
+
+        <div id="diseaseResult"
+             style="margin-top:15px;color:var(--cyan);">
+        </div>
+
+    </div>
+
+
+    <!-- ALERTS -->
+
+    <div class="panel" id="alerts" style="margin-top:20px;">
+
+        <div class="panel-title">
+            <h3>⚠️ FARM ALERT CENTER</h3>
+            <span class="live">SYSTEM MONITORING</span>
+        </div>
+
+        <div class="alert green">
+            🌱 Crop health is within the recommended range.
+        </div>
+
+        <div class="alert">
+            💧 Irrigation recommended after 18:00 based on soil moisture.
+        </div>
+
+        <div class="alert orange">
+            🌦️ Moderate rainfall expected. Adjust irrigation schedule.
+        </div>
+
+    </div>
+
+</section>
+
+
+<footer>
+
+    <span>AGRIVISION AI © 2026</span>
+
+    <span>
+        EXPERT SYSTEM • SMART FARMING • AI AGRICULTURE
+    </span>
+
+</footer>
+
+
+<script>
+
+/* SCROLL */
+
+function scrollToAnalysis(){
+
+    document.getElementById("analysis")
+    .scrollIntoView({
+        behavior:"smooth"
+    });
+
+}
+
+
+/* FARM ANALYSIS */
+
+function analyzeFarm(){
+
+    const soil =
+        document.getElementById("soil").value;
+
+    const water =
+        document.getElementById("water").value;
+
+    const temperature =
+        Number(document.getElementById("temperature").value);
+
+    const rainfall =
+        Number(document.getElementById("rainfall").value);
+
+    let crop = "Rice";
+    let irrigation = "Moderate";
+    let message = "";
+
+
+    if(soil === "Sandy"){
+
+        crop = "Groundnut";
+        irrigation = "High";
+
+    }
+    else if(soil === "Clay"){
+
+        crop = "Rice";
+        irrigation = "Moderate";
+
+    }
+    else if(soil === "Black Soil"){
+
+        crop = "Cotton";
+        irrigation = "Moderate";
+
+    }
+    else if(soil === "Red Soil"){
+
+        crop = "Millets";
+        irrigation = "Low";
+
+    }
+    else{
+
+        crop = "Rice";
+    }
+
+
+    if(water === "Low"){
+        irrigation = "Low";
+    }
+
+
+    if(rainfall > 30){
+        irrigation = "Very Low";
+    }
+
+
+    message = `
+        <strong>✓ ANALYSIS COMPLETE</strong><br><br>
+        Recommended Crop:
+        <strong>${crop}</strong><br>
+        Irrigation Requirement:
+        <strong>${irrigation}</strong><br>
+        Temperature:
+        <strong>${temperature}°C</strong><br>
+        Soil:
+        <strong>${soil}</strong>
+    `;
+
+
+    document.getElementById("analysisResult")
+    .innerHTML = message;
+
+}
+
+
+/* DISEASE DETECTION */
+
+function detectDisease(){
+
+    const result =
+        document.getElementById("diseaseResult");
+
+    result.innerHTML =
+        "🔄 Scanning crop image...";
+
+    setTimeout(function(){
+
+        result.innerHTML = `
+            <strong style="color:var(--green)">
+            ✓ AI SCAN COMPLETE
+            </strong><br><br>
+            Detected Condition:
+            <strong>Healthy Crop</strong><br>
+            Disease Probability:
+            <strong>7%</strong><br>
+            Recommended Action:
+            <strong>Continue regular monitoring.</strong>
+        `;
+
+    },1800);
+
+}
+
+
+/* AI EXPERT */
+
+function showExpert(){
+
+    const questions = [
+        "What crop are you planning to cultivate?",
+        "What is your soil type?",
+        "How much water is available?"
+    ];
+
+    let answer = prompt(
+        "🤖 AGRIVISION AI EXPERT\n\n" +
+        questions[0]
+    );
+
+    if(answer){
+
+        alert(
+            "AI EXPERT RESPONSE\n\n" +
+            "Based on your selected conditions, " +
+            "the expert system can analyze soil, " +
+            "climate and water availability to " +
+            "recommend suitable crops."
+        );
+
+    }
+
+}
+
+
+/* LIVE VALUE ANIMATION */
+
+let moisture = 72;
+
+setInterval(function(){
+
+    moisture +=
+        (Math.random() - .5) * 2;
+
+    moisture =
+        Math.max(65,Math.min(78,moisture));
+
+},2000);
+
+</script>
+
+</body>
+</html>
+```
